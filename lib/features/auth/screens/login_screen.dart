@@ -3,6 +3,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:trip_planner/features/auth/providers/auth_provider.dart';
 
 class LoginScreen extends ConsumerWidget {
+  const LoginScreen({super.key});
+
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return Scaffold(
@@ -11,7 +13,7 @@ class LoginScreen extends ConsumerWidget {
           onPressed: () {
             ref.read(authStateProvider.notifier).signInAnonymously();
           },
-          child: Text('Zaloguj się'),
+          child: const Text('Zaloguj się'),
         ),
       ),
     );

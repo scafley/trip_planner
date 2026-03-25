@@ -17,19 +17,19 @@ final goRouterProvider = Provider<GoRouter>((ref) {
       GoRoute(
         path: '/home',
         builder: (BuildContext context, GoRouterState state) {
-          return HomeScreen();
+          return const HomeScreen();
         },
       ),
       GoRoute(
         path: '/login',
         builder: (BuildContext context, GoRouterState state) {
-          return LoginScreen();
+          return const LoginScreen();
         },
       ),
       GoRoute(
         path: '/splash',
         builder: (BuildContext context, GoRouterState state) {
-          return SplashScreen();
+          return const SplashScreen();
         },
       ),
     ],
