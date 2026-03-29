@@ -18,3 +18,8 @@ Light feature-based MVVM with Riverpod
 ## Live Demo
 
 ## Running locally
+
+
+////
+dart run build_runner build --delete-conflicting-outputs
+

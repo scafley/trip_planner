@@ -44,13 +44,14 @@ app.*.map.json
 /android/app/profile
 /android/app/release
 
-
 windows/
 linux/
 macos/
 firepit-log.txt
 
-
 # Firebase config files
 lib/firebase_options.dart
 firebase.json
+
+# FVM Version Cache
+.fvm/
