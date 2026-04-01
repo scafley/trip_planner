@@ -13,7 +13,7 @@ part of 'trip_provider.dart';
 const tripsProvider = TripsNotifierProvider._();
 
 final class TripsNotifierProvider
-    extends $NotifierProvider<TripsNotifier, List<TripItem>> {
+    extends $StreamNotifierProvider<TripsNotifier, List<TripItem>> {
   const TripsNotifierProvider._()
     : super(
         from: null,
@@ -31,30 +31,22 @@ final class TripsNotifierProvider
   @$internal
   @override
   TripsNotifier create() => TripsNotifier();
-
-  /// {@macro riverpod.override_with_value}
-  Override overrideWithValue(List<TripItem> value) {
-    return $ProviderOverride(
-      origin: this,
-      providerOverride: $SyncValueProvider<List<TripItem>>(value),
-    );
-  }
 }
 
-String _$tripsNotifierHash() => r'b516411b89258e9b691cdf551bae1bcc84d345d6';
+String _$tripsNotifierHash() => r'7042214a90c04b260ec854882f87393bf6133f02';
 
-abstract class _$TripsNotifier extends $Notifier<List<TripItem>> {
-  List<TripItem> build();
+abstract class _$TripsNotifier extends $StreamNotifier<List<TripItem>> {
+  Stream<List<TripItem>> build();
   @$mustCallSuper
   @override
   void runBuild() {
     final created = build();
-    final ref = this.ref as $Ref<List<TripItem>, List<TripItem>>;
+    final ref = this.ref as $Ref<AsyncValue<List<TripItem>>, List<TripItem>>;
     final element =
         ref.element
             as $ClassProviderElement<
-              AnyNotifier<List<TripItem>, List<TripItem>>,
-              List<TripItem>,
+              AnyNotifier<AsyncValue<List<TripItem>>, List<TripItem>>,
+              AsyncValue<List<TripItem>>,
               Object?,
               Object?
             >;
