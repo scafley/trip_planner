@@ -31,16 +31,16 @@ class HomeScreen extends ConsumerWidget {
           Expanded(
             child: tripsAsync.when(
               data: (trips) => trips.isEmpty
-                  ? SizedBox()
+                  ? const SizedBox()
                   : ListView.builder(
                       shrinkWrap: true,
                       itemCount: trips.length,
                       itemBuilder: (context, index) {
-                        return TripCard(trip: trips[index]);
+                        return Center(child: TripCard(trip: trips[index]));
                       },
                     ),
-              error: (e, _) => Text("error"),
-              loading: () => CircularProgressIndicator(),
+              error: (e, _) => const Text("error"),
+              loading: () => const Center(child: CircularProgressIndicator()),
             ),
           ),
           // for (var trip in tripsAsync) ...[TripCard(trip: trip)],

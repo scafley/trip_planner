@@ -5,6 +5,7 @@ import 'package:go_router/go_router.dart';
 import 'package:trip_planner/features/auth/screens/login_screen.dart';
 import 'package:trip_planner/features/auth/screens/splash_screen.dart';
 import 'package:trip_planner/features/trips/screens/home_screen.dart';
+import 'package:trip_planner/features/trips/screens/trip_details_screen.dart';
 
 import '../features/auth/providers/auth_provider.dart';
 
@@ -30,6 +31,13 @@ final goRouterProvider = Provider<GoRouter>((ref) {
         path: '/splash',
         builder: (BuildContext context, GoRouterState state) {
           return const SplashScreen();
+        },
+      ),
+      GoRoute(
+        path: '/trips/:id',
+        builder: (BuildContext context, GoRouterState state) {
+          final tripId = state.pathParameters['id']!;
+          return TripDetailsScreen(tripId: tripId);
         },
       ),
     ],
