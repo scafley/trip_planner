@@ -1,3 +1,4 @@
+import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:trip_planner/features/auth/providers/auth_provider.dart';
@@ -27,6 +28,10 @@ class HomeScreen extends ConsumerWidget {
       ),
       body: Column(
         children: [
+          ElevatedButton(
+            onPressed: () => FirebaseCrashlytics.instance.crash(),
+            child: const Text('Test crash'),
+          ),
           const Center(child: Text('Lista podróży')),
           Expanded(
             child: tripsAsync.when(

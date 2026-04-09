@@ -1,43 +1,47 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:trip_planner/features/trips/models/trip.dart';
+import 'package:trip_planner/features/trips/repositories/expense_repository.dart';
 
 part 'trip_expense_provider.g.dart';
 
 @riverpod
-class TripsExpenseNotifier extends _$TripsExpenseNotifier {
-  CollectionReference<Map<String, dynamic>> _expensesCollection(String tripId) {
-    final userId = FirebaseAuth.instance.currentUser!.uid;
+ExpenseRepository expenseRepository(Ref ref) {
+  return ExpenseRepository();
+}
 
-    return FirebaseFirestore.instance
-        .collection('users')
-        .doc(userId)
-        .collection('trips')
-        .doc(tripId)
-        .collection('expenses');
-  }
-
+@riverpod
+class TripExpenseNotifier extends _$TripExpenseNotifier {
   @override
   Stream<List<TripExpense>> build(String tripId) {
-    return _expensesCollection(tripId)
-        .orderBy('createdAt', descending: true)
-        .snapshots()
-        .map(
-          (snapshot) => snapshot.docs
-              .map((doc) => TripExpense.fromFirestore(doc))
-              .toList(),
-        );
+    return ref.watch(expenseRepositoryProvider).watchExpenses(tripId);
+  }
+
+  Future<void> deleteExpense(String expenseId) async {
+    await ref
+        .read(expenseRepositoryProvider)
+        .deleteExpense(tripId: tripId, expenseId: expenseId);
   }
 
   Future<void> addExpense({
-    required String tripId,
     required String name,
     required double amount,
+    String? description,
     DateTime? date,
   }) async {
-    final expense = TripExpense(id: '', name: name, amount: amount, date: date);
+    await ref
+        .read(expenseRepositoryProvider)
+        .addExpense(
+          tripId: tripId,
+          name: name,
+          amount: amount,
+          description: description,
+          date: date,
+        );
+  }
 
-    await _expensesCollection(tripId).add(expense.toFirestore());
+  Future<void> togglePaid(TripExpense expense) async {
+    await ref
+        .read(expenseRepositoryProvider)
+        .togglePaid(tripId: tripId, expense: expense);
   }
 }

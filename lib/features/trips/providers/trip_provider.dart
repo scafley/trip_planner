@@ -1,44 +1,44 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
+import 'dart:io';
+
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:trip_planner/features/trips/models/trip.dart';
+import 'package:trip_planner/features/trips/repositories/trip_repository.dart';
 
 part 'trip_provider.g.dart';
 
 @riverpod
-class TripsNotifier extends _$TripsNotifier {
-  CollectionReference<Map<String, dynamic>> _tripsCollection() {
-    final userId = FirebaseAuth.instance.currentUser!.uid;
-    return FirebaseFirestore.instance
-        .collection('users')
-        .doc(userId)
-        .collection('trips');
-  }
+TripRepository tripRepository(Ref ref) {
+  return TripRepository();
+}
 
+@riverpod
+class TripsNotifier extends _$TripsNotifier {
   @override
   Stream<List<TripItem>> build() {
-    return _tripsCollection()
-        .orderBy('createdAt', descending: true)
-        .snapshots()
-        .map(
-          (snapshot) =>
-              snapshot.docs.map((doc) => TripItem.fromFirestore(doc)).toList(),
-        );
+    return ref.watch(tripRepositoryProvider).watchTrips();
   }
 
-  void addTrip({required String name, String? description}) async {
-    final newTrip = TripItem(
-      id: '',
-      name: name,
-      description: description,
-      createdAt: DateTime.now(),
-    );
-
-    await _tripsCollection().add(newTrip.toFirestore());
+  Future<void> addTrip({required String name, String? description}) async {
+    await ref
+        .read(tripRepositoryProvider)
+        .addTrip(name: name, description: description);
   }
 
-  void deleteTrip(String id) async {
-    await _tripsCollection().doc(id).delete();
-    //state = state.where((trip) => trip.id != id).toList();
+  Future<void> deleteTrip(String tripId) async {
+    await ref.read(tripRepositoryProvider).deleteTrip(tripId);
   }
+
+  Future<void> uploadTripImage({
+    required String tripId,
+    required File imageFile,
+  }) async {
+    await ref
+        .read(tripRepositoryProvider)
+        .uploadTripImage(tripId: tripId, imageFile: imageFile);
+  }
+}
+
+@riverpod
+Stream<TripItem?> tripDetails(Ref ref, String tripId) {
+  return ref.watch(tripRepositoryProvider).watchTrip(tripId);
 }

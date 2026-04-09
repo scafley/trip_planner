@@ -12,7 +12,12 @@
           "package_name": "com.example.trip_planner"
         }
       },
-      "oauth_client": [],
+      "oauth_client": [
+        {
+          "client_id": "440189416120-r9tttpi4c9uq3cg2joj5krmaeodrlevn.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
       "api_key": [
         {
           "current_key": "AIzaSyAKrIRfBR6mq1ze3KFUzC-8l8dScJY7qcI"
@@ -20,7 +25,19 @@
       ],
       "services": {
         "appinvite_service": {
-          "other_platform_oauth_client": []
+          "other_platform_oauth_client": [
+            {
+              "client_id": "440189416120-r9tttpi4c9uq3cg2joj5krmaeodrlevn.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "440189416120-vj6ien4g6n6u6ucrhb6o89egp7cu6nop.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.tripPlanner"
+              }
+            }
+          ]
         }
       }
     }

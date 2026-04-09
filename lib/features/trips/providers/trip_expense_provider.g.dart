@@ -9,39 +9,86 @@ part of 'trip_expense_provider.dart';
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // ignore_for_file: type=lint, type=warning
 
-@ProviderFor(TripsExpenseNotifier)
-const tripsExpenseProvider = TripsExpenseNotifierFamily._();
+@ProviderFor(expenseRepository)
+const expenseRepositoryProvider = ExpenseRepositoryProvider._();
 
-final class TripsExpenseNotifierProvider
-    extends $StreamNotifierProvider<TripsExpenseNotifier, List<TripExpense>> {
-  const TripsExpenseNotifierProvider._({
-    required TripsExpenseNotifierFamily super.from,
+final class ExpenseRepositoryProvider
+    extends
+        $FunctionalProvider<
+          ExpenseRepository,
+          ExpenseRepository,
+          ExpenseRepository
+        >
+    with $Provider<ExpenseRepository> {
+  const ExpenseRepositoryProvider._()
+    : super(
+        from: null,
+        argument: null,
+        retry: null,
+        name: r'expenseRepositoryProvider',
+        isAutoDispose: true,
+        dependencies: null,
+        $allTransitiveDependencies: null,
+      );
+
+  @override
+  String debugGetCreateSourceHash() => _$expenseRepositoryHash();
+
+  @$internal
+  @override
+  $ProviderElement<ExpenseRepository> $createElement(
+    $ProviderPointer pointer,
+  ) => $ProviderElement(pointer);
+
+  @override
+  ExpenseRepository create(Ref ref) {
+    return expenseRepository(ref);
+  }
+
+  /// {@macro riverpod.override_with_value}
+  Override overrideWithValue(ExpenseRepository value) {
+    return $ProviderOverride(
+      origin: this,
+      providerOverride: $SyncValueProvider<ExpenseRepository>(value),
+    );
+  }
+}
+
+String _$expenseRepositoryHash() => r'e33dbce465ddd2592a69b3b85e5c8cacaa8da411';
+
+@ProviderFor(TripExpenseNotifier)
+const tripExpenseProvider = TripExpenseNotifierFamily._();
+
+final class TripExpenseNotifierProvider
+    extends $StreamNotifierProvider<TripExpenseNotifier, List<TripExpense>> {
+  const TripExpenseNotifierProvider._({
+    required TripExpenseNotifierFamily super.from,
     required String super.argument,
   }) : super(
          retry: null,
-         name: r'tripsExpenseProvider',
+         name: r'tripExpenseProvider',
          isAutoDispose: true,
          dependencies: null,
          $allTransitiveDependencies: null,
        );
 
   @override
-  String debugGetCreateSourceHash() => _$tripsExpenseNotifierHash();
+  String debugGetCreateSourceHash() => _$tripExpenseNotifierHash();
 
   @override
   String toString() {
-    return r'tripsExpenseProvider'
+    return r'tripExpenseProvider'
         ''
         '($argument)';
   }
 
   @$internal
   @override
-  TripsExpenseNotifier create() => TripsExpenseNotifier();
+  TripExpenseNotifier create() => TripExpenseNotifier();
 
   @override
   bool operator ==(Object other) {
-    return other is TripsExpenseNotifierProvider && other.argument == argument;
+    return other is TripExpenseNotifierProvider && other.argument == argument;
   }
 
   @override
@@ -50,35 +97,35 @@ final class TripsExpenseNotifierProvider
   }
 }
 
-String _$tripsExpenseNotifierHash() =>
-    r'5738ee52bf11b60ab1a5ab666052df2874430219';
+String _$tripExpenseNotifierHash() =>
+    r'3c8fa6c8a633168872b17231d76bcc917d3cef25';
 
-final class TripsExpenseNotifierFamily extends $Family
+final class TripExpenseNotifierFamily extends $Family
     with
         $ClassFamilyOverride<
-          TripsExpenseNotifier,
+          TripExpenseNotifier,
           AsyncValue<List<TripExpense>>,
           List<TripExpense>,
           Stream<List<TripExpense>>,
           String
         > {
-  const TripsExpenseNotifierFamily._()
+  const TripExpenseNotifierFamily._()
     : super(
         retry: null,
-        name: r'tripsExpenseProvider',
+        name: r'tripExpenseProvider',
         dependencies: null,
         $allTransitiveDependencies: null,
         isAutoDispose: true,
       );
 
-  TripsExpenseNotifierProvider call(String tripId) =>
-      TripsExpenseNotifierProvider._(argument: tripId, from: this);
+  TripExpenseNotifierProvider call(String tripId) =>
+      TripExpenseNotifierProvider._(argument: tripId, from: this);
 
   @override
-  String toString() => r'tripsExpenseProvider';
+  String toString() => r'tripExpenseProvider';
 }
 
-abstract class _$TripsExpenseNotifier
+abstract class _$TripExpenseNotifier
     extends $StreamNotifier<List<TripExpense>> {
   late final _$args = ref.$arg as String;
   String get tripId => _$args;
