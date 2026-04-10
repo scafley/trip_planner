@@ -1,5 +1,7 @@
 import 'dart:io';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -20,9 +22,21 @@ class TripCard extends ConsumerWidget {
       imageQuality: 70,
     );
     if (img == null) return;
-    await ref
-        .read(tripsProvider.notifier)
-        .uploadTripImage(tripId: trip.id, imageFile: File(img.path));
+
+    if (kIsWeb) {
+      final bytes = await img.readAsBytes();
+      await ref
+          .read(tripsProvider.notifier)
+          .uploadTripImageBytes(
+            tripId: trip.id,
+            bytes: bytes,
+            mimeType: 'image/jpeg',
+          );
+    } else {
+      await ref
+          .read(tripsProvider.notifier)
+          .uploadTripImage(tripId: trip.id, imageFile: File(img.path));
+    }
   }
 
   @override

@@ -11,6 +11,9 @@ abstract class TripItem with _$TripItem {
     String? description,
     required DateTime createdAt,
     String? imageUrl,
+    @Default(false) bool isCompleted,
+    DateTime? startDate,
+    DateTime? endDate,
   }) = _TripItem;
 
   factory TripItem.fromFirestore(DocumentSnapshot doc) {
@@ -21,6 +24,13 @@ abstract class TripItem with _$TripItem {
       description: data['description'] as String?,
       createdAt: (data['createdAt'] as Timestamp).toDate(),
       imageUrl: data['imageUrl'] as String?,
+      isCompleted: data['isCompleted'] as bool? ?? false,
+      startDate: data['startDate'] != null
+          ? (data['startDate'] as Timestamp).toDate()
+          : null,
+      endDate: data['endDate'] != null
+          ? (data['endDate'] as Timestamp).toDate()
+          : null,
     );
   }
 }
@@ -65,5 +75,37 @@ extension TripExpenseX on TripExpense {
     'amount': amount,
     'isPaid': isPaid,
     'date': date != null ? Timestamp.fromDate(date!) : null,
+  };
+}
+
+@freezed
+abstract class TripDestination with _$TripDestination {
+  const factory TripDestination({
+    required String id,
+    required String name,
+    required double latitude,
+    required double longitude,
+    @Default(false) bool isVisited,
+  }) = _TripDetination;
+
+  factory TripDestination.fromFirestore(DocumentSnapshot doc) {
+    final data = doc.data() as Map<String, dynamic>;
+
+    return TripDestination(
+      id: doc.id,
+      name: data['name'] as String,
+      latitude: (data['latitude'] as num).toDouble(),
+      longitude: (data['longitude'] as num).toDouble(),
+      isVisited: data['isVisited'] as bool? ?? false,
+    );
+  }
+}
+
+extension TripDestinatioX on TripDestination {
+  Map<String, dynamic> toFirestore() => {
+    'name': name,
+    'latitude': latitude,
+    'longitude': longitude,
+    'isVisited': isVisited,
   };
 }

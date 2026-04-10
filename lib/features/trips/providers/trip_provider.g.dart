@@ -74,7 +74,7 @@ final class TripsNotifierProvider
   TripsNotifier create() => TripsNotifier();
 }
 
-String _$tripsNotifierHash() => r'29a8446c326499ad148d08c813dd4183e8290935';
+String _$tripsNotifierHash() => r'8fbeb4f6746b41dbbfab29cb777386014bb15346';
 
 abstract class _$TripsNotifier extends $StreamNotifier<List<TripItem>> {
   Stream<List<TripItem>> build();

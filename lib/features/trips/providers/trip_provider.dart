@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'dart:typed_data';
 
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:trip_planner/features/trips/models/trip.dart';
@@ -35,6 +36,16 @@ class TripsNotifier extends _$TripsNotifier {
     await ref
         .read(tripRepositoryProvider)
         .uploadTripImage(tripId: tripId, imageFile: imageFile);
+  }
+
+  Future<void> uploadTripImageBytes({
+    required String tripId,
+    required Uint8List bytes,
+    required String mimeType,
+  }) async {
+    await ref
+        .read(tripRepositoryProvider)
+        .uploadTripImageBytes(tripId: tripId, bytes: bytes, mimeType: mimeType);
   }
 }
 

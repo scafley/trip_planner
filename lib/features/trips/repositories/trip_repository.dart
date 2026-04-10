@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'dart:typed_data';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
@@ -51,6 +52,23 @@ class TripRepository extends BaseRepository {
     );
 
     await ref.putFile(imageFile);
+    final url = await ref.getDownloadURL();
+
+    await _tripsCollection.doc(tripId).update({'imageUrl': url});
+
+    return url;
+  }
+
+  Future<String> uploadTripImageBytes({
+    required String tripId,
+    required Uint8List bytes,
+    required String mimeType,
+  }) async {
+    final ref = FirebaseStorage.instance.ref().child(
+      'users/$userId/trips/$tripId/cover.jpg',
+    );
+
+    await ref.putData(bytes, SettableMetadata(contentType: mimeType));
     final url = await ref.getDownloadURL();
 
     await _tripsCollection.doc(tripId).update({'imageUrl': url});
